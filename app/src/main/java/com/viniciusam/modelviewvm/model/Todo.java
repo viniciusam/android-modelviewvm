@@ -7,13 +7,24 @@ import java.util.Date;
  */
 public class Todo {
 
+    private long id;
     private String title;
-    private Date date;
+    private Date createdAt;
     private boolean completed;
 
-    public Todo(String title, Date date) {
+    public Todo(long id, String title, Date createdAt, boolean completed) {
+        this.id = id;
         this.title = title;
-        this.date = date;
+        this.createdAt = createdAt;
+        this.completed = completed;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -24,12 +35,12 @@ public class Todo {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public boolean isCompleted() {

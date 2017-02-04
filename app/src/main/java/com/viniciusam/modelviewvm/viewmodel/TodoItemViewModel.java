@@ -31,7 +31,7 @@ public class TodoItemViewModel extends BaseObservable {
 
     public String getCreatedAt() {
         DateFormat fmt = SimpleDateFormat.getDateTimeInstance();
-        return String.format(mContext.getString(R.string.created_at), fmt.format(mTodo.getDate()));
+        return String.format(mContext.getString(R.string.created_at), fmt.format(mTodo.getCreatedAt()));
     }
 
     public boolean isCompleted() {
