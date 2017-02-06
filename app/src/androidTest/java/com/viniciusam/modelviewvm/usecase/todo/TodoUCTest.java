@@ -1,4 +1,4 @@
-package com.viniciusam.modelviewvm;
+package com.viniciusam.modelviewvm.usecase.todo;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,9 +9,8 @@ import android.support.test.runner.AndroidJUnit4;
 import com.viniciusam.modelviewvm.model.Todo;
 import com.viniciusam.modelviewvm.sqlite.DBContract.TodoEntry;
 import com.viniciusam.modelviewvm.sqlite.DBOpenHelper;
-import com.viniciusam.modelviewvm.usecase.todo.GetAllTodoUC;
-import com.viniciusam.modelviewvm.usecase.todo.InsertTodoUC;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -46,6 +45,7 @@ public class TodoUCTest {
     }
 
     @Before
+    @After
     public void resetDatabase() {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         db.delete(TodoEntry.TABLE_NAME, null, null);

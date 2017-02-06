@@ -2,7 +2,8 @@ package com.viniciusam.modelviewvm.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
-import android.view.View;
+import android.text.Editable;
+import android.widget.EditText;
 
 import com.viniciusam.modelviewvm.executor.Executor;
 import com.viniciusam.modelviewvm.executor.ThreadedExecutor;
@@ -50,12 +51,17 @@ public class TodoListViewModel extends BaseObservable {
                 .execute(mExecutor);
     }
 
-    public void onAddButtonClick(View v) {
-        new InsertTodoUC(mContext, "New Todo")
+    public void onAddButtonClick(EditText editText) {
+        final Editable text = editText.getText();
+        if (text.length() == 0)
+            return;
+
+        new InsertTodoUC(mContext, text.toString())
                 .onSuccess(new UseCase.OnSuccessCallback<Todo>() {
                     @Override
                     public void onSuccess(Todo t) {
                         mAdapter.addItem(t);
+                        text.clear();
                     }
                 })
                 .execute(mExecutor);

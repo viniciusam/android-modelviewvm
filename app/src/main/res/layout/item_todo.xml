@@ -9,10 +9,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/cardview_spacing"
-        android:layout_marginStart="@dimen/cardview_spacing"
-        android:layout_marginEnd="@dimen/cardview_spacing"
-        app:contentPadding="@dimen/cardview_spacing">
+        android:layout_marginTop="@dimen/list_item_spacing"
+        android:layout_marginStart="@dimen/list_item_spacing"
+        android:layout_marginEnd="@dimen/list_item_spacing"
+        app:contentPadding="@dimen/list_item_spacing">
 
         <LinearLayout
             android:layout_width="match_parent"
