@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         mBinding.setViewModel(viewModel);
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recyclerView.setHasFixedSize(true);
         mBinding.recyclerView.setAdapter(viewModel.getAdapter());
 
         viewModel.loadTodos();
