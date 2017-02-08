@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ModelViewVM</string>
+
+    <!-- Todo Item -->
     <string name="created_at">Created at: %s</string>
+
+    <!-- Dialogs -->
+    <string name="delete">Delete</string>
+    <string name="are_you_sure">Are you sure?</string>
 </resources>

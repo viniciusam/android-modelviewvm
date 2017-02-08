@@ -60,6 +60,17 @@ public class TodoUCTest {
     }
 
     @Test
+    public void removeTodoUCTest() throws Exception {
+        Todo newTodo = new InsertTodoUC(mAppContext, "New Todo")
+                .run();
+        new RemoveTodoUC(mAppContext, newTodo.getId())
+                .run();
+        List<Todo> todoList = new GetAllTodoUC(mAppContext)
+                .run();
+        assertEquals(todoList.size(), 0);
+    }
+
+    @Test
     public void getAllTodoUCTest() throws Exception {
         new InsertTodoUC(mAppContext, "New Todo")
                 .run();

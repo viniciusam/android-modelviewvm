@@ -6,15 +6,11 @@ import android.text.Editable;
 import android.widget.EditText;
 
 import com.viniciusam.modelviewvm.executor.Executor;
-import com.viniciusam.modelviewvm.executor.ThreadedExecutor;
-import com.viniciusam.modelviewvm.executor.UseCase;
-import com.viniciusam.modelviewvm.model.Todo;
 import com.viniciusam.modelviewvm.usecase.todo.GetAllTodoUC;
 import com.viniciusam.modelviewvm.usecase.todo.InsertTodoUC;
 import com.viniciusam.modelviewvm.view.adapter.TodoListAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Vinicius on 01/02/2017.
@@ -25,15 +21,11 @@ public class TodoListViewModel extends BaseObservable {
     private Executor mExecutor;
     private TodoListAdapter mAdapter;
 
-    public TodoListViewModel(Context context) {
+    public TodoListViewModel(Context context, Executor executor) {
         mContext = context;
-        mExecutor = new ThreadedExecutor();
-        mAdapter = new TodoListAdapter(mContext);
-        mAdapter.setItems(new ArrayList<Todo>());
-    }
-
-    public void quitExecutor() {
-        mExecutor.quit();
+        mExecutor = executor;
+        mAdapter = new TodoListAdapter(mContext, mExecutor);
+        mAdapter.setItems(new ArrayList<>());
     }
 
     public TodoListAdapter getAdapter() {
@@ -42,12 +34,7 @@ public class TodoListViewModel extends BaseObservable {
 
     public void loadTodos() {
         new GetAllTodoUC(mContext)
-                .onSuccess(new UseCase.OnSuccessCallback<List<Todo>>() {
-                    @Override
-                    public void onSuccess(List<Todo> t) {
-                        mAdapter.setItems(t);
-                    }
-                })
+                .onSuccess(t -> mAdapter.setItems(t))
                 .execute(mExecutor);
     }
 
@@ -57,12 +44,9 @@ public class TodoListViewModel extends BaseObservable {
             return;
 
         new InsertTodoUC(mContext, text.toString())
-                .onSuccess(new UseCase.OnSuccessCallback<Todo>() {
-                    @Override
-                    public void onSuccess(Todo t) {
-                        mAdapter.addItem(t);
-                        text.clear();
-                    }
+                .onSuccess(t -> {
+                    mAdapter.addItem(t);
+                    text.clear();
                 })
                 .execute(mExecutor);
     }

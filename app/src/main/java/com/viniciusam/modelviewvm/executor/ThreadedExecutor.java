@@ -21,26 +21,12 @@ public class ThreadedExecutor implements Executor {
 
     @Override
     public <E> void execute(final UseCase<E> useCase) {
-        mExecutorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final E e = useCase.run();
-
-                    mMainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            useCase.callOnSuccess(e);
-                        }
-                    });
-                } catch (final Exception e) {
-                    mMainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            useCase.callOnError(e);
-                        }
-                    });
-                }
+        mExecutorService.execute(() -> {
+            try {
+                final E e = useCase.run();
+                mMainHandler.post(() -> useCase.callOnSuccess(e));
+            } catch (final Exception e) {
+                mMainHandler.post(() -> useCase.callOnError(e));
             }
         });
     }

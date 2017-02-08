@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.viniciusam.modelviewvm.R;
 import com.viniciusam.modelviewvm.databinding.ItemTodoBinding;
+import com.viniciusam.modelviewvm.executor.Executor;
 import com.viniciusam.modelviewvm.model.Todo;
 import com.viniciusam.modelviewvm.viewmodel.TodoItemViewModel;
 
@@ -16,13 +17,16 @@ import java.util.List;
 /**
  * Created by Vinicius on 01/02/2017.
  */
-public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.BindingHolder> {
+public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.BindingHolder>
+        implements TodoItemViewModel.Callbacks {
 
     private Context mContext;
+    private Executor mExecutor;
     private List<Todo> mList;
 
-    public TodoListAdapter(Context context) {
+    public TodoListAdapter(Context context, Executor executor) {
         mContext = context;
+        mExecutor = executor;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.Bindin
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
         Todo todo = mList.get(position);
-        holder.getBinding().setViewModel(new TodoItemViewModel(mContext, todo));
+        holder.getBinding().setViewModel(new TodoItemViewModel(mContext, mExecutor, this, todo));
     }
 
     @Override
@@ -51,6 +55,19 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.Bindin
     public void addItem(Todo todo) {
         mList.add(todo);
         notifyItemInserted(getItemCount() + 1);
+    }
+
+    public void removeItem(Todo todo) {
+        int i = mList.indexOf(todo);
+        if (i != -1) {
+            mList.remove(i);
+            notifyItemRemoved(i);
+        }
+    }
+
+    @Override
+    public void onTodoDeleted(Todo todo) {
+        removeItem(todo);
     }
 
     public static class BindingHolder extends  RecyclerView.ViewHolder {

@@ -7,18 +7,22 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.viniciusam.modelviewvm.R;
 import com.viniciusam.modelviewvm.databinding.ActivityMainBinding;
+import com.viniciusam.modelviewvm.executor.Executor;
+import com.viniciusam.modelviewvm.executor.ThreadedExecutor;
 import com.viniciusam.modelviewvm.viewmodel.TodoListViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mBinding;
+    private Executor mExecutor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mExecutor = new ThreadedExecutor();
 
-        TodoListViewModel viewModel = new TodoListViewModel(this);
+        TodoListViewModel viewModel = new TodoListViewModel(this, mExecutor);
         mBinding.setViewModel(viewModel);
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -30,6 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBinding.getViewModel().quitExecutor();
+        mExecutor.quit();
     }
 }

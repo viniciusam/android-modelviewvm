@@ -19,12 +19,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <CheckBox
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.title}"
-                android:checked="@{viewModel.completed}"
-                android:onClick="@{(v) -> viewModel.onCompletedClick(v)}"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{viewModel.title}"
+                    android:checked="@{viewModel.completed}"
+                    android:onClick="@{(v) -> viewModel.onCompletedClick(v)}"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_delete_grey600_24dp"
+                    android:onClick="@{(v) -> viewModel.onDeleteClick(v)}"/>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

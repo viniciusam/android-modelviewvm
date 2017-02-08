@@ -35,7 +35,7 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest() {
+    public void insertTodoTest() {
         final String todoText = "New Todo";
 
         onView(allOf(withId(R.id.text), isDisplayed()))
@@ -46,6 +46,11 @@ public class MainActivityTest {
 
         onView(childAtPosition(withId(R.id.recycler_view), 0))
                 .check(matches(hasDescendant(withText(todoText))));
+    }
+
+    @Test
+    public void removeTodoTest() {
+        // TODO
     }
 
     private static Matcher<View> childAtPosition(
